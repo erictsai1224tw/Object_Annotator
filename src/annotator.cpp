@@ -16,9 +16,13 @@ annotator::~annotator()
 {
     std::cout << "Annotator object deleted!\n";
     origin_image.release();
+    processed_image.release();
+    grayed_image.release();
+    blurred_image.release();
+    cannyed_image.release();
 }
 
-cv::Mat annotator::process_image()
+cv::Mat annotator::image_processing()
 {
     grayed_image = gray_image(origin_image);
     blurred_image = blur_image(grayed_image);
@@ -45,4 +49,15 @@ cv::Mat annotator::canny_image(cv::Mat in_image)
   cv::Mat temp_cannyed_image;
   cv::Canny(in_image, temp_cannyed_image, 50, 150, 3);
   return temp_cannyed_image;
+}
+
+void annotator::save_image()
+{
+  if (!std::filesystem::is_directory("./test"))
+  {
+    std::filesystem::create_directory("./test");
+  }
+  cv::imwrite("./test/gray.jpg", grayed_image);
+  cv::imwrite("./test/blur.jpg", blurred_image);
+  cv::imwrite("./test/canny.jpg", cannyed_image);
 }

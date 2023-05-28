@@ -9,10 +9,8 @@ int main(int argc, char** argv )
     }
 
     annotator ann(argv[1]);
-    
-    // cv::imwrite("test.jpg", image);
-    // labeling_assistant test_cv;
-
+    ann.image_processing();
+    ann.save_image();
 
     return 0;
 }
